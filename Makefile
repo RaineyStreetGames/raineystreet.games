@@ -1,4 +1,5 @@
 .PHONY: run
 
 run:
-	python3 -m http.server 8088
+	@echo "http://localhost:8088/raineystreet.games/"
+	@cd .. && python3 -m http.server 8088

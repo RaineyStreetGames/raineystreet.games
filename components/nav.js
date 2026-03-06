@@ -86,6 +86,14 @@ function buildNav() {
 
   nav.appendChild(brand);
 
+  // Hamburger button (mobile only — hidden via CSS on desktop)
+  const hamburger = document.createElement('button');
+  hamburger.className = 'nav-hamburger';
+  hamburger.setAttribute('aria-label', 'Open menu');
+  hamburger.setAttribute('aria-expanded', 'false');
+  hamburger.innerHTML = '<span></span><span></span><span></span>';
+  nav.appendChild(hamburger);
+
   // Tab list
   const ul = document.createElement('ul');
   ul.className = 'topbar-links';
@@ -159,6 +167,17 @@ document.body.insertAdjacentElement('afterbegin', buildNav());
 
 // ── Nav interactivity ──────────────────────────────────────────────
 
+
+function closeMenu() {
+  const topbar = document.querySelector('.topbar');
+  const hb = document.querySelector('.nav-hamburger');
+  topbar.classList.remove('is-menu-open');
+  if (hb) {
+    hb.classList.remove('is-open');
+    hb.setAttribute('aria-expanded', 'false');
+  }
+}
+
 function closeAllDropdowns() {
   document.querySelectorAll('.nav-item.is-open').forEach((el) => {
     el.classList.remove('is-open');
@@ -173,18 +192,59 @@ function closeAllSubmenus() {
   });
 }
 
-// Top-level dropdown toggles
-document.addEventListener('click', (e) => {
-  // If clicking the dropdown nav-tab link, just navigate (don't prevent default)
-  const btn = e.target.closest('.has-dropdown > .nav-tab');
-  if (btn) {
-    // Let the link navigate normally
+// Hamburger toggle
+document.querySelector('.nav-hamburger').addEventListener('click', (e) => {
+  e.stopPropagation();
+  const topbar = document.querySelector('.topbar');
+  const hb = e.currentTarget;
+  const opening = !topbar.classList.contains('is-menu-open');
+  if (opening) {
+    topbar.classList.add('is-menu-open');
+    hb.classList.add('is-open');
+    hb.setAttribute('aria-expanded', 'true');
+  } else {
+    closeMenu();
     closeAllDropdowns();
     closeAllSubmenus();
+  }
+});
+
+// Top-level dropdown toggles
+document.addEventListener('click', (e) => {
+  // Top-level: "Games" tab — first click opens, second click navigates
+  const dropTab = e.target.closest('.has-dropdown > .nav-tab');
+  if (dropTab) {
+    const li = dropTab.closest('.has-dropdown');
+    const isOpen = li.classList.contains('is-open');
+    if (!isOpen) {
+      e.preventDefault();
+      closeAllDropdowns();
+      closeAllSubmenus();
+      li.classList.add('is-open');
+    } else {
+      // Already open: navigate
+      closeAllDropdowns();
+      closeAllSubmenus();
+    }
     return;
   }
 
-  // Submenu toggle arrow (mobile)
+  // Submenu link (e.g. "Kithwind") — first click opens, second click navigates
+  const subLink = e.target.closest('.has-submenu > a');
+  if (subLink) {
+    const subItem = subLink.closest('.has-submenu');
+    const isOpen = subItem.classList.contains('is-open');
+    if (!isOpen) {
+      e.preventDefault();
+      closeAllSubmenus();
+      subItem.classList.add('is-open');
+    }
+    // Already open: navigate normally
+    e.stopPropagation(); // don't close parent dropdown
+    return;
+  }
+
+  // Submenu arrow button (alternate toggle)
   const arrowBtn = e.target.closest('.submenu-toggle');
   if (arrowBtn) {
     const subItem = arrowBtn.closest('.has-submenu');
@@ -195,7 +255,17 @@ document.addEventListener('click', (e) => {
     return;
   }
 
+  // Clicking a leaf nav link in mobile drawer → close menu
+  const navLink = e.target.closest('.topbar-links a');
+  if (navLink) {
+    closeMenu();
+    closeAllDropdowns();
+    closeAllSubmenus();
+    return;
+  }
+
   // Click outside — close everything
+  closeMenu();
   closeAllDropdowns();
   closeAllSubmenus();
 });
@@ -203,6 +273,7 @@ document.addEventListener('click', (e) => {
 // Escape key closes everything
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
+    closeMenu();
     closeAllDropdowns();
     closeAllSubmenus();
   }

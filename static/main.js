@@ -17,8 +17,8 @@ const isHomePage = !!document.querySelector('.hero-scroll');
 
 function updateBackground() {
   if (!isHomePage) return;
-  const maxScroll = document.body.scrollHeight - window.innerHeight;
-  const progress  = maxScroll > 0 ? Math.min(window.scrollY / maxScroll, 1) : 0;
+  const maxScroll = document.body.scrollHeight - cachedVH;
+  const progress  = maxScroll > 0 ? Math.min(currentScrollY / maxScroll, 1) : 0;
 
   const r = Math.round(SKY[0] + (DEEP[0] - SKY[0]) * progress);
   const g = Math.round(SKY[1] + (DEEP[1] - SKY[1]) * progress);
@@ -50,6 +50,7 @@ const rng = mulberry32(7391);
 
 
 // ── Cloud SVG generation ───────────────────────────────────────────
+// Uses simple circles with CSS opacity — no SVG filters for performance.
 
 function makeSVGCloud(rng) {
   const ns         = 'http://www.w3.org/2000/svg';
@@ -75,8 +76,6 @@ function makeSVGCloud(rng) {
   const svgW = totalW + pad * 2;
   const svgH = (maxY - minY) + pad * 2;
 
-  const filterId = `cf${Math.floor(rng() * 999999)}`;
-
   const svg = document.createElementNS(ns, 'svg');
   svg.setAttribute('viewBox', `${-pad} ${minY - pad} ${svgW} ${svgH}`);
   svg.setAttribute('width',  svgW);
@@ -86,12 +85,7 @@ function makeSVGCloud(rng) {
   svg.setAttribute('aria-hidden', 'true');
 
   svg.innerHTML = `
-    <defs>
-      <filter id="${filterId}" x="-40%" y="-40%" width="180%" height="180%">
-        <feGaussianBlur stdDeviation="5"/>
-      </filter>
-    </defs>
-    <g filter="url(#${filterId})" fill="white" opacity="0.82">
+    <g fill="white">
       ${circles.map(c =>
         `<circle cx="${c.cx.toFixed(1)}" cy="${c.cy.toFixed(1)}" r="${c.r.toFixed(1)}"/>`
       ).join('')}
@@ -103,8 +97,11 @@ function makeSVGCloud(rng) {
 
 // ── Cloud definitions ──────────────────────────────────────────────
 // rate also drives horizontal drift speed: closer (higher rate) = faster.
+// Reduce cloud count on mobile for better performance.
 
-const CLOUD_DEFS = [
+const isMobile = window.innerWidth < 768;
+
+const ALL_CLOUD_DEFS = [
   // Near layer
   { baseYvh: 1.10, scale: 2.2, rate: 0.58 },
   { baseYvh: 1.35, scale: 1.9, rate: 0.62 },
@@ -133,6 +130,11 @@ const CLOUD_DEFS = [
   { baseYvh: 2.40, scale: 0.7, rate: 0.72 },
 ];
 
+// On mobile, use every other cloud to halve the workload
+const CLOUD_DEFS = isMobile
+  ? ALL_CLOUD_DEFS.filter((_, i) => i % 2 === 0)
+  : ALL_CLOUD_DEFS;
+
 // Coin flip on page load: all clouds drift the same direction.
 // Speed varies per cloud based on parallax rate (closer = faster).
 const cloudDirection = Math.random() < 0.5 ? 1 : -1;
@@ -141,6 +143,17 @@ const cloudDirection = Math.random() < 0.5 ? 1 : -1;
 function driftSpeed(rate) {
   return rate * 0.35;
 }
+
+
+// ── Cached viewport dimensions (updated on resize) ────────────────
+
+let cachedVW = window.innerWidth;
+let cachedVH = window.innerHeight;
+
+window.addEventListener('resize', () => {
+  cachedVW = window.innerWidth;
+  cachedVH = window.innerHeight;
+}, { passive: true });
 
 
 // ── Build and mount cloud elements ────────────────────────────────
@@ -165,6 +178,8 @@ if (cloudLayer) {
       left: 0;
       top: 0;
       will-change: transform;
+      filter: blur(5px);
+      opacity: 0.9;
       pointer-events: none;
     `;
     wrapper.appendChild(inner);
@@ -172,7 +187,7 @@ if (cloudLayer) {
 
     // Stratified random start: each cloud owns one equal zone of the screen
     // so clouds are spread rather than clumped.
-    const zoneW  = window.innerWidth / total;
+    const zoneW  = cachedVW / total;
     const startX = i * zoneW + Math.random() * zoneW;
 
     cloudWrappers.push({
@@ -191,40 +206,45 @@ if (cloudLayer) {
 const heroScroll = document.querySelector('.hero-scroll');
 const logoWrap   = document.getElementById('hero-logo-wrap');
 
-function updateLogo(scrollY) {
+function updateLogo() {
   if (!heroScroll || !logoWrap) return;
   const fadeRange = heroScroll.offsetHeight * 0.38;
-  const opacity   = Math.max(0, 1 - scrollY / fadeRange);
+  const opacity   = Math.max(0, 1 - currentScrollY / fadeRange);
   logoWrap.style.opacity = opacity;
-  // Drift upward as user scrolls; guard keeps the CSS entrance animation intact
-  if (scrollY > 0) {
-    logoWrap.style.transform = `translateY(${-(scrollY * 0.35).toFixed(1)}px)`;
+  if (currentScrollY > 0) {
+    logoWrap.style.transform = `translateY(${-(currentScrollY * 0.35).toFixed(1)}px)`;
   }
 }
 
 
 // ── Scroll state (read by the rAF loop) ───────────────────────────
+// Only store the scroll position in the handler — all DOM writes
+// happen inside the rAF loop to avoid layout thrashing.
 
 let currentScrollY = window.scrollY;
+let scrollDirty    = false;
 
 window.addEventListener('scroll', () => {
   currentScrollY = window.scrollY;
-  updateBackground();
-  updateLogo(currentScrollY);
+  scrollDirty    = true;
 }, { passive: true });
-
-updateBackground();
-updateLogo(currentScrollY);
 
 
 // ── Animation loop ────────────────────────────────────────────────
-// Handles both horizontal cloud drift (with edge wrapping)
-// and vertical scroll parallax in one rAF loop.
+// Handles cloud drift, scroll parallax, background color, and logo
+// fade — all in one rAF loop to batch DOM writes per frame.
 
 function animate() {
+  // Process scroll-driven updates once per frame
+  if (scrollDirty) {
+    updateBackground();
+    updateLogo();
+    scrollDirty = false;
+  }
+
   if (cloudWrappers.length > 0) {
-    const vh = window.innerHeight;
-    const vw = window.innerWidth;
+    const vh = cachedVH;
+    const vw = cachedVW;
 
     cloudWrappers.forEach((cw) => {
       // Drift horizontally
@@ -240,13 +260,16 @@ function animate() {
       // Vertical position driven by scroll
       const y = cw.def.baseYvh * vh - currentScrollY * cw.def.rate;
 
-      cw.wrapper.style.transform = `translate(${cw.x.toFixed(1)}px, ${y.toFixed(1)}px)`;
+      cw.wrapper.style.transform = `translate3d(${cw.x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`;
     });
   }
 
   requestAnimationFrame(animate);
 }
 
+// Initial updates
+updateBackground();
+updateLogo();
 requestAnimationFrame(animate);
 
 

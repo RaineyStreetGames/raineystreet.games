@@ -102,8 +102,7 @@ body {
 }
 
 .nav-tab:hover,
-.nav-item.is-open .nav-tab,
-.has-dropdown:hover .nav-tab {
+.nav-item.is-open .nav-tab {
   background: rgba(255, 255, 255, 0.15);
   color: #fff;
 }
@@ -122,8 +121,7 @@ body {
   margin-top: 1px;
 }
 
-.has-dropdown.is-open .nav-tab::after,
-.has-dropdown:hover .nav-tab::after {
+.has-dropdown.is-open .nav-tab::after {
   transform: rotate(180deg);
 }
 
@@ -163,14 +161,6 @@ body {
   pointer-events: auto;
 }
 
-/* Open dropdown on hover (desktop) */
-@media (hover: hover) {
-  .has-dropdown:hover>.dropdown {
-    opacity: 1;
-    transform: none;
-    pointer-events: auto;
-  }
-}
 
 .dropdown a {
   font-family: 'Bebas Neue', system-ui, sans-serif;
@@ -273,15 +263,6 @@ body {
   width: 10px;
 }
 
-/* Show on hover (desktop) */
-
-@media (hover: hover) {
-  .has-submenu:hover>.submenu {
-    opacity: 1;
-    transform: none;
-    pointer-events: auto;
-  }
-}
 
 /* Show on .is-open (touch / keyboard) */
 
@@ -616,6 +597,167 @@ body {
 
 .nav-item a:hover .nav-social-icon {
   opacity: 0.7;
+}
+
+/* ── Hamburger button ─────────────────────────────────── */
+
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+
+.nav-hamburger:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+  transform-origin: center;
+}
+
+/* Animate to ✕ when open */
+.nav-hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.is-open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ── Mobile nav & content ─────────────────────────────── */
+
+@media (max-width: 700px) {
+  .nav-hamburger {
+    display: flex;
+  }
+
+  /* Links collapse into a full-width drawer below the topbar */
+  .topbar-links {
+    display: none;
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background: rgba(30, 33, 42, 0.98);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.4rem 0 0.75rem;
+    z-index: 99;
+  }
+
+  .topbar.is-menu-open .topbar-links {
+    display: flex;
+  }
+
+  .nav-item {
+    width: 100%;
+  }
+
+  .nav-tab {
+    width: 100%;
+    padding: 0.85rem 1.5rem;
+    font-size: 1.3rem;
+    border-radius: 0;
+    justify-content: space-between;
+  }
+
+  /* Dropdown: static + hidden until .is-open */
+  .dropdown {
+    position: static;
+    min-width: unset;
+    width: 100%;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    background: rgba(0, 0, 0, 0.25);
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    display: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .dropdown::before {
+    display: none;
+  }
+
+  .nav-item.is-open > .dropdown {
+    display: block;
+  }
+
+  .dropdown a {
+    padding: 0.75rem 2.5rem;
+  }
+
+  /* Submenu: static + hidden until .is-open */
+  .submenu {
+    position: static;
+    min-width: unset;
+    width: 100%;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    background: rgba(0, 0, 0, 0.2);
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    display: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .submenu::before {
+    display: none;
+  }
+
+  .has-submenu.is-open > .submenu {
+    display: block;
+  }
+
+  .submenu-toggle {
+    display: flex !important;
+  }
+
+  .submenu a {
+    padding: 0.65rem 3.75rem;
+  }
+
+  /* Content panels */
+  .glass-box {
+    width: 100%;
+    padding: 1.5rem 1.25rem;
+  }
+
+  .content-flow {
+    padding: 5rem 1rem 14rem;
+    gap: 3rem;
+  }
+
+  .glass-panel:nth-child(2) {
+    margin-top: 3rem;
+  }
+
+  .section {
+    padding: 3rem 1.25rem;
+  }
+
+  .page-hero {
+    padding: 90px 1.25rem 2rem;
+  }
 }
 
 
