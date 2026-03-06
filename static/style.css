@@ -433,6 +433,13 @@ body {
   /* remove inline-block gap below SVG */
 }
 
+.bottom-scene::after {
+  content: '';
+  display: block;
+  height: env(safe-area-inset-bottom);
+  background: #040910;
+}
+
 .bottom-svg {
   display: block;
   width: 100%;
@@ -573,6 +580,7 @@ body {
   text-align: center;
   margin-top: 4rem;
   padding: 3rem 2rem;
+  padding-bottom: calc(3rem + env(safe-area-inset-bottom));
   font-size: 0.85rem;
   color: #fff;
 }
