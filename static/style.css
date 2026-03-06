@@ -637,9 +637,17 @@ body {
 }
 
 /* Animate to ✕ when open */
-.nav-hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.nav-hamburger.is-open span:nth-child(2) { opacity: 0; }
-.nav-hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.nav-hamburger.is-open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.nav-hamburger.is-open span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-hamburger.is-open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
 
 /* ── Mobile nav & content ─────────────────────────────── */
 
@@ -703,7 +711,7 @@ body {
     display: none;
   }
 
-  .nav-item.is-open > .dropdown {
+  .nav-item.is-open>.dropdown {
     display: block;
   }
 
@@ -732,7 +740,7 @@ body {
     display: none;
   }
 
-  .has-submenu.is-open > .submenu {
+  .has-submenu.is-open>.submenu {
     display: block;
   }
 
