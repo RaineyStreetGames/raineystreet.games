@@ -28,7 +28,7 @@ function updateBackground() {
 }
 
 if (!isHomePage) {
-  const path  = window.location.pathname.replace(/\/index\.html$/, '').replace(/\/$/, '') || '/';
+  const path  = window.location.pathname.replace(/\/index\.html$/, '').replace(/\/$/, '').replace(/^\/raineystreet\.games/, '') || '/';
   const color = PAGE_COLORS[path] || DEEP;
   document.documentElement.style.setProperty('--bg', `${color[0]}, ${color[1]}, ${color[2]}`);
 }

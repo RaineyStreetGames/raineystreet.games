@@ -2,6 +2,8 @@
 // Edit NAV_ITEMS to add pages, dropdowns, and submenus.
 // This file is loaded by every page — changes here apply everywhere.
 
+const BASE = '/raineystreet.games';
+
 const NAV_ITEMS = [
   {
     label: 'Games',
@@ -34,7 +36,7 @@ function buildDropdownItem(item) {
 
   // Link — always navigates
   const a = document.createElement('a');
-  a.href = item.href || '#';
+  a.href = item.href ? BASE + item.href : '#';
   a.setAttribute('role', 'menuitem');
   a.textContent = item.label;
   li.appendChild(a);
@@ -55,7 +57,7 @@ function buildDropdownItem(item) {
       const subLi = document.createElement('li');
       subLi.setAttribute('role', 'none');
       const subA = document.createElement('a');
-      subA.href = subItem.href || '#';
+      subA.href = subItem.href ? BASE + subItem.href : '#';
       subA.setAttribute('role', 'menuitem');
       subA.textContent = subItem.label;
       subLi.appendChild(subA);
@@ -74,10 +76,10 @@ function buildNav() {
   // Brand icon
   const brand = document.createElement('a');
   brand.className = 'topbar-brand';
-  brand.href = '/';
+  brand.href = BASE + '/';
 
   const brandImg = document.createElement('img');
-  brandImg.src = '/assets/icon.png';
+  brandImg.src = BASE + '/assets/icon.png';
   brandImg.alt = 'Rainey Street Games';
   brandImg.className = 'topbar-brand-img';
   brand.appendChild(brandImg);
@@ -97,7 +99,7 @@ function buildNav() {
       li.classList.add('has-dropdown');
       const a = document.createElement('a');
       a.className = 'nav-tab';
-      a.href = item.href || '#';
+      a.href = item.href ? BASE + item.href : '#';
       a.setAttribute('aria-expanded', 'false');
       a.setAttribute('aria-haspopup', 'true');
       a.textContent = item.label;
@@ -115,7 +117,7 @@ function buildNav() {
       // Plain link tab
       const a = document.createElement('a');
       a.className = 'nav-tab';
-      a.href = item.href || '#';
+      a.href = item.href ? BASE + item.href : '#';
       a.textContent = item.label;
       li.appendChild(a);
     }
@@ -125,8 +127,8 @@ function buildNav() {
 
   // Social icon tabs
   const socialLinks = [
-    { href: 'https://bsky.app/profile/raineystreetgames.bsky.social', icon: '/assets/icons/bluesky.svg', label: 'Bluesky' },
-    { href: 'https://www.youtube.com/@raineystreetgames3671', icon: '/assets/icons/youtube.svg', label: 'YouTube' },
+    { href: 'https://bsky.app/profile/raineystreetgames.bsky.social', icon: BASE + '/assets/icons/bluesky.svg', label: 'Bluesky' },
+    { href: 'https://www.youtube.com/@raineystreetgames3671', icon: BASE + '/assets/icons/youtube.svg', label: 'YouTube' },
   ];
 
   socialLinks.forEach((s) => {
