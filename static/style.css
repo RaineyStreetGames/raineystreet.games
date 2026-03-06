@@ -1,0 +1,646 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* RGB channels only — JS interpolates these on scroll */
+  --bg: 91, 184, 245;
+  --max-width: 860px;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-y: scroll;
+  /* always reserve scrollbar width so nav stays full-width */
+}
+
+body {
+  background-color: rgb(var(--bg));
+  color: #fff;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 1.05rem;
+  line-height: 1.75;
+  min-height: 100dvh;
+}
+
+/* ── Nav ──────────────────────────────────────────────── */
+
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  height: 64px;
+  background: rgba(48, 52, 62, 0.93);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.28);
+}
+
+.topbar-brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.topbar-brand-img {
+  height: 54px;
+  width: auto;
+  display: block;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.35));
+  transition: filter 0.2s;
+}
+
+.topbar-brand:hover .topbar-brand-img {
+  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.5));
+}
+
+/* Tab list */
+
+.topbar-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Each nav item is the positioning context for its dropdown */
+
+.nav-item {
+  position: relative;
+}
+
+/* Shared style for both <a> and <button> nav tabs */
+
+.nav-tab {
+  font-family: 'Bebas Neue', system-ui, sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.88);
+  text-transform: uppercase;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem 1.1rem;
+  border-radius: 4px;
+  transition: background 0.18s, color 0.18s;
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+  line-height: 1;
+}
+
+.nav-tab:hover,
+.nav-item.is-open .nav-tab,
+.has-dropdown:hover .nav-tab {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+/* Chevron on the Games button */
+
+.has-dropdown .nav-tab::after {
+  content: '';
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid currentColor;
+  transition: transform 0.2s;
+  margin-top: 1px;
+}
+
+.has-dropdown.is-open .nav-tab::after,
+.has-dropdown:hover .nav-tab::after {
+  transform: rotate(180deg);
+}
+
+/* ── Dropdown ─────────────────────────────────────────── */
+
+.dropdown {
+  list-style: none;
+  position: absolute;
+  top: calc(100% + 2px);
+  right: 0;
+  min-width: 200px;
+  background: rgba(42, 46, 56, 0.96);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 0.4rem 0;
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Invisible bridge covering the gap between trigger and dropdown */
+.dropdown::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 0;
+  right: 0;
+  height: 6px;
+}
+
+.nav-item.is-open .dropdown {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+/* Open dropdown on hover (desktop) */
+@media (hover: hover) {
+  .has-dropdown:hover > .dropdown {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+}
+
+.dropdown a {
+  font-family: 'Bebas Neue', system-ui, sans-serif;
+  font-size: 1.05rem;
+  letter-spacing: 0.08em;
+  display: block;
+  padding: 0.6rem 1.1rem;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background 0.15s, color 0.15s;
+}
+
+.dropdown a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* ── Submenu (nested flyout) ──────────────────────────── */
+
+/* Items inside the dropdown that have a nested submenu */
+
+.has-submenu {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.has-submenu>a {
+  flex: 1;
+}
+
+/* Permanent › indicator showing the link has a nested flyout */
+.has-submenu>a::after {
+  content: '›';
+  display: inline-block;
+  margin-left: 0.4em;
+  font-size: 1.1em;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.45);
+  transition: color 0.15s;
+}
+
+.has-submenu:hover>a::after,
+.has-submenu.is-open>a::after {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Arrow button — touch devices only; desktop uses the ::after indicator */
+
+.submenu-toggle {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.6rem 0.75rem 0.6rem 0;
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.submenu-toggle:hover {
+  color: #fff;
+}
+
+@media (hover: hover) {
+  .submenu-toggle {
+    display: none;
+  }
+}
+
+/* Flyout submenu — opens to the left (nav sits on the right side) */
+
+.submenu {
+  list-style: none;
+  position: absolute;
+  right: 100%;
+  top: -0.4rem;
+  min-width: 160px;
+  background: rgba(34, 38, 48, 0.98);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 0.4rem 0;
+  opacity: 0;
+  transform: translateX(6px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Invisible bridge covering the gap between parent item and submenu */
+.submenu::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: -10px;
+  bottom: 0;
+  width: 10px;
+}
+
+/* Show on hover (desktop) */
+
+@media (hover: hover) {
+  .has-submenu:hover>.submenu {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+}
+
+/* Show on .is-open (touch / keyboard) */
+
+.has-submenu.is-open>.submenu {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.submenu a {
+  font-family: 'Bebas Neue', system-ui, sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  display: block;
+  padding: 0.55rem 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background 0.15s, color 0.15s;
+}
+
+.submenu a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* ── Hero scroll zone ─────────────────────────────────── */
+/* Tall container — stage inside is sticky so clouds and  */
+/* logo stay pinned while you scroll through the zone.    */
+
+.hero-scroll {
+  position: relative;
+  height: 280vh;
+}
+
+.hero-stage {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+/* Cloud layer — fixed full-page underlay, behind all content */
+
+#cloud-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Logo / wordmark wrap — centered, fades on scroll */
+
+.hero-logo-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 64px 2rem 2rem;
+  /* clear the fixed nav */
+  animation: hero-fade-in 1.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes hero-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Logo image — fills most of the scene */
+
+.hero-logo-img {
+  display: block;
+  max-width: min(68vw, 620px);
+  max-height: 55vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(0 4px 32px rgba(0, 0, 0, 0.18));
+}
+
+/* Fallback wordmark — shown when logo image is absent */
+
+.hero-wordmark {
+  font-family: 'Bebas Neue', system-ui, sans-serif;
+  font-size: clamp(3rem, 10vw, 7rem);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+}
+
+.hero-tagline {
+  margin-top: 1rem;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* ── Content flow (glass panels) ──────────────────────── */
+/* Appears after the hero scroll zone ends.               */
+
+.content-flow {
+  padding: 14rem 2rem 28rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6rem;
+}
+
+.glass-panel {
+  display: flex;
+  justify-content: center;
+}
+
+/* Extra breathing room before the second panel */
+.glass-panel:nth-child(2) {
+  margin-top: 12rem;
+}
+
+.glass-box {
+  width: 80%;
+  max-width: var(--max-width);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 16px;
+  padding: 3rem;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.glass-box h2 {
+  font-family: 'Bebas Neue', system-ui, sans-serif;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.glass-box p {
+  color: rgba(255, 255, 255, 0.78);
+  max-width: 60ch;
+}
+
+/* ── Bottom scene (reusable pattern) ──────────────────── */
+/* Any page can end with a .bottom-scene containing:       */
+/*   1. a full-width SVG (.bottom-svg)                     */
+/*   2. optionally a .site-footer                          */
+/* The footer is pinned absolutely to the SVG's bottom     */
+/* edge — no gap, no background bleed, no extra height.   */
+
+.bottom-scene {
+  position: relative;
+  width: 100%;
+  line-height: 0;
+  /* remove inline-block gap below SVG */
+}
+
+.bottom-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 160px;
+}
+
+.bottom-scene .site-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  line-height: 1.75;
+  /* restore body line-height inside absolute block */
+}
+
+/* Legacy alias — keep .ground-scene working on the home page */
+.ground-scene {
+  position: relative;
+  width: 100%;
+  line-height: 0;
+}
+
+.ground-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 160px;
+}
+
+.ground-scene .site-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  line-height: 1.75;
+}
+
+/* ── Inner page hero (about, kithwind, etc.) ──────────── */
+
+.page-hero {
+  min-height: 40vh;
+  display: flex;
+  align-items: flex-end;
+  padding: 100px 2rem 3rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.page-hero-inner {
+  max-width: var(--max-width);
+  width: 100%;
+  margin: 0 auto;
+}
+
+.page-eyebrow {
+  font-family: 'Bebas Neue', system-ui, sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 0.2rem;
+}
+
+.page-title {
+  font-size: clamp(2.8rem, 8vw, 5.5rem);
+  font-weight: 700;
+  line-height: 1;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.15);
+}
+
+.page-sub {
+  margin-top: 0.6rem;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.65);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ── Content sections ─────────────────────────────────── */
+
+.section {
+  padding: 6rem 2rem;
+}
+
+.section-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.section h2 {
+  font-size: clamp(1.3rem, 4vw, 1.9rem);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.section p {
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 60ch;
+}
+
+/* ── Game cards ───────────────────────────────────────── */
+
+.game-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.game-card {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  padding: 2rem;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.game-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.game-card p {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+/* ── Footer ───────────────────────────────────────────── */
+
+.site-footer {
+  text-align: center;
+  margin-top: 4rem;
+  padding: 3rem 2rem;
+  font-size: 0.85rem;
+  color: #fff;
+}
+
+.site-footer a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  text-decoration: underline;
+}
+
+/* ── Nav social icons ─────────────────────────────────── */
+
+.nav-social-icon {
+  width: 22px;
+  height: 22px;
+  display: block;
+  transition: opacity 0.2s;
+}
+
+.nav-item a:hover .nav-social-icon {
+  opacity: 0.7;
+}
+
+
+/* ── Scroll animations ────────────────────────────────── */
+
+[data-animate] {
+  opacity: 0;
+  transition:
+    opacity 0.75s ease var(--delay, 0s),
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0s);
+}
+
+[data-animate="fade-up"] {
+  transform: translateY(36px);
+}
+
+[data-animate="slide-left"] {
+  transform: translateX(-52px);
+}
+
+[data-animate="slide-right"] {
+  transform: translateX(52px);
+}
+
+[data-animate].is-visible {
+  opacity: 1;
+  transform: none;
+}

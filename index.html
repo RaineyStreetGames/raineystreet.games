@@ -1,34 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RaineyStreet Games</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Rainey Street Games</title>
+  <link rel="icon" href="/assets/favicon/favicon.ico" sizes="any" />
+  <link rel="icon" href="/assets/favicon/favicon-32x32.png" type="image/png" sizes="32x32" />
+  <link rel="icon" href="/assets/favicon/favicon-16x16.png" type="image/png" sizes="16x16" />
+  <link rel="apple-touch-icon" href="/assets/favicon/apple-touch-icon.png" />
+  <link rel="manifest" href="/assets/favicon/site.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
 </head>
+
 <body>
-  <header>
-    <h1>RaineyStreet Games</h1>
-    <p class="tagline">Independent game development studio</p>
-  </header>
 
-  <main>
-    <section class="about">
-      <h2>About</h2>
-      <p>
-        RaineyStreet Games is an independent game development studio building
-        games and the tools that power them.
-      </p>
+  <!-- Nav injected by components/nav.js -->
+  <script src="components/nav.js"></script>
+
+
+  <!-- ── HERO SCROLL ZONE ──────────────────────────────────────────
+       500vh tall container. The .hero-stage inside is sticky so it
+       pins to the viewport while you scroll through the full zone.
+       Clouds and logo animate entirely within the stage.
+  ─────────────────────────────────────────────────────────────── -->
+  <!-- Cloud layer — fixed overlay, populated by main.js, spans full page -->
+  <div id="cloud-layer" aria-hidden="true"></div>
+
+  <div class="hero-scroll">
+    <div class="hero-stage">
+
+      <!-- Logo / wordmark
+           ▸ Drop your logo image at: assets/logo.png
+             It fades in on page load and fades out as you scroll.
+           ▸ The <h1> below shows while the image is absent or loading.
+           ▸ Once you have the logo file you can remove the <h1>.      -->
+      <div class="hero-logo-wrap" id="hero-logo-wrap">
+        <img class="hero-logo-img" src="assets/logo.png" alt="Rainey Street Games" />
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ── CONTENT PANELS ────────────────────────────────────────────
+       Semi-transparent glass boxes, 80% wide, centered.
+       Appear after the logo fades and clouds clear.
+       Fill in content when ready.
+  ─────────────────────────────────────────────────────────────── -->
+  <div class="content-flow">
+
+    <section class="glass-panel">
+      <div class="glass-box">
+        <h2>Welcome</h2>
+        <p>Content placeholder — more to come here.</p>
+      </div>
     </section>
 
-    <section class="games">
-      <h2>Games</h2>
-      <p>Games coming soon. Stay tuned.</p>
+    <section class="glass-panel">
+      <div class="glass-box">
+        <h2>What We Build</h2>
+        <p>Content placeholder — more to come here.</p>
+      </div>
     </section>
-  </main>
 
-  <footer>
-    <p>&copy; 2026 RaineyStreet Games</p>
-  </footer>
+  </div>
+
+
+  <div class="bottom-scene">
+    <img src="/assets/scenes/footer.svg" class="bottom-svg" alt="" aria-hidden="true" />
+    <footer class="site-footer">
+      <p>&copy; 2026 <a href="mailto:raineystreetgames@gmail.com">Rainey Street Games</a></p>
+    </footer>
+  </div>
+
+  <script src="/static/main.js"></script>
 </body>
+
 </html>

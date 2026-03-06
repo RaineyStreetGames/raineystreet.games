@@ -1,0 +1,222 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 424" width="1600" height="424" preserveAspectRatio="none">
+  <defs>
+    <pattern id="bp" x="0" y="0" width="13" height="1" patternUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="11" height="1" fill="#8a5c35"/>
+      <rect x="11" y="0" width="2" height="1" fill="#180a04"/>
+    </pattern>
+    <pattern id="grain" x="0" y="0" width="13" height="1" patternUnits="userSpaceOnUse">
+      <rect x="4" y="0" width="1" height="1" fill="#000" opacity="0.07"/>
+      <rect x="9" y="0" width="1" height="1" fill="#000" opacity="0.05"/>
+    </pattern>
+  </defs>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- LAYER 1: TREES                                           -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+
+  <ellipse cx="165" cy="126" rx="58" ry="80" fill="#2c5624"/>
+  <ellipse cx="156" cy="72"  rx="36" ry="40" fill="#2c5624"/>
+  <ellipse cx="108" cy="108" rx="40" ry="54" fill="#2c5624"/>
+  <ellipse cx="218" cy="104" rx="42" ry="54" fill="#2c5624"/>
+  <ellipse cx="165" cy="162" rx="50" ry="38" fill="#2c5624"/>
+  <ellipse cx="178" cy="136" rx="44" ry="60" fill="#183a14" opacity="0.48"/>
+  <ellipse cx="138" cy="90"  rx="26" ry="32" fill="#3c7032" opacity="0.50"/>
+  <rect x="157" y="170" width="17" height="16" rx="3" fill="#3a2210"/>
+
+  <ellipse cx="355" cy="134" rx="46" ry="66" fill="#265022"/>
+  <ellipse cx="348" cy="86"  rx="28" ry="34" fill="#265022"/>
+  <ellipse cx="312" cy="112" rx="32" ry="46" fill="#265022"/>
+  <ellipse cx="394" cy="110" rx="34" ry="48" fill="#265022"/>
+  <ellipse cx="355" cy="160" rx="40" ry="34" fill="#265022"/>
+  <ellipse cx="368" cy="142" rx="34" ry="48" fill="#163818" opacity="0.44"/>
+  <ellipse cx="334" cy="98"  rx="20" ry="26" fill="#3a6a2c" opacity="0.46"/>
+  <rect x="348" y="172" width="15" height="14" rx="2" fill="#3a2210"/>
+
+  <ellipse cx="1435" cy="126" rx="58" ry="80" fill="#2c5624"/>
+  <ellipse cx="1444" cy="72"  rx="36" ry="40" fill="#2c5624"/>
+  <ellipse cx="1492" cy="108" rx="40" ry="54" fill="#2c5624"/>
+  <ellipse cx="1382" cy="104" rx="42" ry="54" fill="#2c5624"/>
+  <ellipse cx="1435" cy="162" rx="50" ry="38" fill="#2c5624"/>
+  <ellipse cx="1422" cy="136" rx="44" ry="60" fill="#183a14" opacity="0.48"/>
+  <ellipse cx="1462" cy="90"  rx="26" ry="32" fill="#3c7032" opacity="0.50"/>
+  <rect x="1427" y="170" width="17" height="16" rx="3" fill="#3a2210"/>
+
+  <ellipse cx="1245" cy="134" rx="46" ry="66" fill="#265022"/>
+  <ellipse cx="1252" cy="86"  rx="28" ry="34" fill="#265022"/>
+  <ellipse cx="1292" cy="112" rx="32" ry="46" fill="#265022"/>
+  <ellipse cx="1206" cy="110" rx="34" ry="48" fill="#265022"/>
+  <ellipse cx="1245" cy="160" rx="40" ry="34" fill="#265022"/>
+  <ellipse cx="1232" cy="142" rx="34" ry="48" fill="#163818" opacity="0.44"/>
+  <ellipse cx="1266" cy="98"  rx="20" ry="26" fill="#3a6a2c" opacity="0.46"/>
+  <rect x="1238" y="172" width="15" height="14" rx="2" fill="#3a2210"/>
+
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- LAYER 2: BUILDING                                        -->
+  <!--   Garage door x=622–978 (smidge past gate posts 632/954) -->
+  <!--   Building x=598–1194 (24px wall left, 216px wall right) -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+
+  <!-- Full building wall -->
+  <rect x="598" y="128" width="596" height="172" fill="#c4b28a"/>
+
+  <!-- House siding (left of garage) -->
+  <g stroke="#b0a078" stroke-width="1" opacity="0.28">
+    <line x1="598" y1="138" x2="622" y2="138"/>
+    <line x1="598" y1="148" x2="622" y2="148"/>
+    <line x1="598" y1="158" x2="622" y2="158"/>
+    <line x1="598" y1="168" x2="622" y2="168"/>
+    <line x1="598" y1="178" x2="622" y2="178"/>
+    <line x1="598" y1="188" x2="622" y2="188"/>
+  </g>
+
+  <!-- Right house section — very slightly darker than garage wall -->
+  <!-- starts 24px past garage door right edge (x=978+24=1002), matching left padding -->
+  <rect x="1002" y="128" width="192" height="172" fill="#000" opacity="0.07"/>
+
+  <!-- House siding (right of garage) -->
+  <g stroke="#b0a078" stroke-width="1" opacity="0.28">
+    <line x1="1002" y1="138" x2="1194" y2="138"/>
+    <line x1="1002" y1="148" x2="1194" y2="148"/>
+    <line x1="1002" y1="158" x2="1194" y2="158"/>
+    <line x1="1002" y1="168" x2="1194" y2="168"/>
+    <line x1="1002" y1="178" x2="1194" y2="178"/>
+    <line x1="1002" y1="188" x2="1194" y2="188"/>
+  </g>
+
+  <!-- Garage header band (wall above door — matches wall color for clear door boundary) -->
+  <rect x="622" y="128" width="356" height="16" fill="#c4b28a"/>
+
+  <!-- Garage door — wider, past fence posts -->
+  <rect x="622" y="144" width="356" height="106" fill="#a09878"/>
+  <rect x="622" y="144" width="356" height="7"   fill="#5a4622"/>
+  <rect x="622" y="144" width="356" height="106" fill="none" stroke="#6a5a38" stroke-width="4"/>
+  <!-- Panel seams -->
+  <line x1="622" y1="176" x2="978" y2="176" stroke="#78684a" stroke-width="3"/>
+  <line x1="622" y1="208" x2="978" y2="208" stroke="#78684a" stroke-width="3"/>
+  <!-- Center split -->
+  <line x1="800" y1="144" x2="800" y2="250" stroke="#887858" stroke-width="2" opacity="0.30"/>
+  <!-- Top panel windows (4, evenly spaced across wider door) -->
+  <rect x="648"  y="152" width="52" height="15" rx="2" fill="#7aaccb" opacity="0.44"/>
+  <rect x="722"  y="152" width="52" height="15" rx="2" fill="#7aaccb" opacity="0.44"/>
+  <rect x="826"  y="152" width="52" height="15" rx="2" fill="#7aaccb" opacity="0.44"/>
+  <rect x="900"  y="152" width="52" height="15" rx="2" fill="#7aaccb" opacity="0.44"/>
+  <!-- Handle -->
+  <rect x="789" y="236" width="22" height="7"  rx="3" fill="#5a4a2e"/>
+  <circle cx="800" cy="239" r="4" fill="#7a6a46"/>
+
+  <!-- House ROOF — drawn first so garage roof paints on top -->
+  <path fill="#4a3222" d="M 968,124 L 1082,58 L 1208,120 L 1208,124 L 968,124 Z"/>
+  <rect x="964" y="120" width="248" height="8" fill="#2e1c0e"/>
+
+  <!-- Garage ROOF — drawn after house roof so it overlaps correctly -->
+  <path fill="#3e2c1a" d="M 568,128 L 800,30 L 1032,128 Z"/>
+  <rect x="564" y="124" width="472" height="8" fill="#261a0c"/>
+
+  <!-- Chimney -->
+  <rect x="1140" y="44"  width="32" height="82" fill="#3a2616"/>
+  <rect x="1134" y="40"  width="44" height="10" fill="#2a1a0a"/>
+  <rect x="1136" y="38"  width="40" height="4"  fill="#1e1408"/>
+
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- LAYER 3: FENCE                                           -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+
+  <rect x="0"    y="183" width="605" height="67" fill="url(#bp)"/>
+  <rect x="0"    y="183" width="605" height="67" fill="url(#grain)"/>
+  <rect x="1009" y="183" width="591" height="67" fill="url(#bp)"/>
+  <rect x="1009" y="183" width="591" height="67" fill="url(#grain)"/>
+
+  <rect x="0"    y="183" width="605" height="9"  fill="#6a3e1e"/>
+  <rect x="0"    y="183" width="605" height="2"  fill="#a07248" opacity="0.24"/>
+  <rect x="0"    y="218" width="605" height="7"  fill="#5a3415"/>
+  <rect x="0"    y="240" width="605" height="7"  fill="#4e2e12"/>
+  <rect x="1009" y="183" width="591" height="9"  fill="#6a3e1e"/>
+  <rect x="1009" y="183" width="591" height="2"  fill="#a07248" opacity="0.24"/>
+  <rect x="1009" y="218" width="591" height="7"  fill="#5a3415"/>
+  <rect x="1009" y="240" width="591" height="7"  fill="#4e2e12"/>
+
+  <!-- Gate posts — centers align with garage section edges (x=598 left, x=1002 right) -->
+  <rect x="591"  y="174" width="14" height="126" rx="2" fill="#4e2e10"/>
+  <rect x="995"  y="174" width="14" height="126" rx="2" fill="#4e2e10"/>
+  <rect x="589"  y="170" width="18" height="8"   rx="2" fill="#3e2410"/>
+  <rect x="993"  y="170" width="18" height="8"   rx="2" fill="#3e2410"/>
+
+  <rect x="0"    y="249" width="605" height="4"  fill="#000" opacity="0.11"/>
+  <rect x="1009" y="249" width="591" height="4"  fill="#000" opacity="0.11"/>
+
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- LAYER 4: GROUND                                          -->
+  <!--   y=250–300 → GRASS (driveway ends here)                -->
+  <!--   y=300–362 → PAVEMENT (62 px of clear footer space)    -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+
+  <!-- GRASS strip -->
+  <rect x="0"   y="250" width="1600" height="50" fill="#4a8235"/>
+  <!-- Subtle grass texture: slightly darker patches -->
+  <rect x="0"   y="256" width="1600" height="44" fill="#427830" opacity="0.35"/>
+
+  <!-- PAVEMENT / SIDEWALK (124 px, footer text lives here) -->
+  <rect x="0"   y="300" width="1600" height="124" fill="#6c6056"/>
+  <!-- Pavement top edge (grass/pavement join) -->
+  <rect x="0"   y="298" width="1600" height="4"   fill="#4a3e34"/>
+  <!-- Vertical seams (outside driveway area) -->
+  <line x1="220"  y1="300" x2="220"  y2="424" stroke="#5a5048" stroke-width="1.5" opacity="0.35"/>
+  <line x1="1380" y1="300" x2="1380" y2="424" stroke="#5a5048" stroke-width="1.5" opacity="0.35"/>
+
+  <!-- DRIVEWAY — top aligns with garage door (x=622–978), ends at y=300 -->
+  <!-- At y=250: x=622–978  /  At y=300: x=574–1026 -->
+  <polygon points="622,250 574,300 1026,300 978,250" fill="#b4a492"/>
+
+  <!-- Driveway perspective edge lines -->
+  <line x1="622" y1="250" x2="574"  y2="300" stroke="#9a8a7a" stroke-width="2" opacity="0.45"/>
+  <line x1="978" y1="250" x2="1026" y2="300" stroke="#9a8a7a" stroke-width="2" opacity="0.45"/>
+  <!-- Driveway center line (dashed) -->
+  <line x1="800" y1="250" x2="800"  y2="300" stroke="#c0b0a0" stroke-width="2" opacity="0.28" stroke-dasharray="20,14"/>
+
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- LAYER 5: TELEPHONE POLE                                  -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+
+  <!-- Shadow on grass -->
+  <ellipse cx="288" cy="260" rx="12" ry="5" fill="#000" opacity="0.18"/>
+
+  <rect x="276" y="2"   width="24" height="260" rx="2" fill="#231308"/>
+  <rect x="282" y="2"   width="3"  height="260" fill="#160c04" opacity="0.44"/>
+  <rect x="291" y="2"   width="2"  height="260" fill="#341e0c" opacity="0.18"/>
+
+  <rect x="218" y="8"   width="144" height="12" rx="2" fill="#19100a"/>
+  <polygon points="276,20 276,8 240,8" fill="#120c06"/>
+  <polygon points="300,20 300,8 336,8" fill="#120c06"/>
+  <rect x="272" y="0"   width="32" height="8"   rx="2" fill="#19100a"/>
+
+  <g fill="#383228">
+    <rect x="224" y="19" width="10" height="13" rx="3"/>
+    <rect x="252" y="17" width="10" height="13" rx="3"/>
+    <rect x="312" y="17" width="10" height="13" rx="3"/>
+    <rect x="340" y="19" width="10" height="13" rx="3"/>
+  </g>
+  <g fill="#666" opacity="0.28">
+    <rect x="225" y="19" width="8"  height="4"  rx="2"/>
+    <rect x="253" y="17" width="8"  height="4"  rx="2"/>
+    <rect x="313" y="17" width="8"  height="4"  rx="2"/>
+    <rect x="341" y="19" width="8"  height="4"  rx="2"/>
+  </g>
+  <rect x="279" y="188" width="20" height="14" rx="2" fill="#d4b870" opacity="0.55"/>
+
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- LAYER 6: POWER WIRES — last, over everything             -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+
+  <path d="M 0,6   C 90,12 170,22 229,32" fill="none" stroke="#0c0c0c" stroke-width="2.6"/>
+  <path d="M 345,32 C 700,44 1080,34 1600,4"  fill="none" stroke="#0c0c0c" stroke-width="2.6"/>
+  <path d="M 0,14  C 90,20 176,26 257,30" fill="none" stroke="#0c0c0c" stroke-width="2.0"/>
+  <path d="M 317,30 C 700,42 1080,32 1600,12" fill="none" stroke="#0c0c0c" stroke-width="2.0"/>
+  <path d="M 0,20  C 90,26 178,28 257,30" fill="none" stroke="#141414" stroke-width="1.4" opacity="0.72"/>
+  <path d="M 317,30 C 700,42 1080,36 1600,18" fill="none" stroke="#141414" stroke-width="1.4" opacity="0.72"/>
+
+</svg>
