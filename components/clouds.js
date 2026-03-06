@@ -17,18 +17,52 @@ const CLOUD_IMAGES = [
   'assets/clouds/cloud6.png',
 ];
 
-// ── Image loading ──────────────────────────────────────────────────
+// ── Image loading + offscreen pre-render ───────────────────────────
+// Each cloud is baked (image + blur) into a small offscreen canvas once
+// at load time. The draw loop then copies those — no per-frame filter
+// state changes, which were causing GPU flushes and flicker.
 
-const loadedImages = [];  // parallel array to CLOUD_IMAGES, null until loaded
-let imagesReady    = 0;   // count of successfully loaded images
+const loadedImages = [];
+
+function blurForScale(scale) {
+  // far ~3px, mid ~2px, near ~1px
+  return Math.max(0.5, 4.5 - scale * 1.75);
+}
+
+function preRenderCloud(cw, img) {
+  const normalizedScale = (BASE_CLOUD_W / img.naturalWidth) * cw.def.scale;
+  const dw     = Math.ceil(img.naturalWidth  * normalizedScale);
+  const dh     = Math.ceil(img.naturalHeight * normalizedScale);
+  const blurPx = blurForScale(cw.def.scale);
+  const pad    = Math.ceil(blurPx * 4); // padding for blur edge bleed
+
+  const off    = document.createElement('canvas');
+  off.width    = dw + pad * 2;
+  off.height   = dh + pad * 2;
+  const offCtx = off.getContext('2d');
+
+  offCtx.filter      = `blur(${blurPx.toFixed(1)}px)`;
+  offCtx.globalAlpha = 0.88;
+  offCtx.drawImage(img, pad, pad, dw, dh);
+
+  cw.offscreen = off;
+  cw.dw        = dw;
+  cw.dh        = dh;
+  cw.offPad    = pad;
+}
 
 CLOUD_IMAGES.forEach((src, i) => {
+  loadedImages[i] = null;
   const img = new Image();
-  img.onload = () => { loadedImages[i] = img; imagesReady++; };
+  img.onload = () => {
+    loadedImages[i] = img;
+    // Pre-render any cloud that uses this image
+    clouds.forEach(cw => { if (cw.imgIdx === i) preRenderCloud(cw, img); });
+  };
   img.onerror = () => { loadedImages[i] = null; };
   img.src = src;
-  loadedImages[i] = null; // placeholder
 });
+
 
 // ── Cloud definitions ──────────────────────────────────────────────
 // baseYvh: vertical position as fraction of viewport height (can exceed 1.0)
@@ -38,30 +72,28 @@ CLOUD_IMAGES.forEach((src, i) => {
 const isMobile = window.innerWidth < 768;
 
 // Clouds are grouped into far/mid/near layers, then sorted by scale
-// at draw time so larger clouds always render in front.
-// baseYvh starts at 0.6 (lower on screen) and extends to 3.2 for
-// deep-scroll coverage. Counts are kept low for clean spacing.
+// so larger clouds always render in front of smaller ones.
 
 const FAR_CLOUDS = [
   { baseYvh: 0.62, scale: 0.72, rate: 0.22 },
-  { baseYvh: 0.95, scale: 0.80, rate: 0.24 },
-  { baseYvh: 1.28, scale: 0.75, rate: 0.23 },
-  { baseYvh: 1.60, scale: 0.68, rate: 0.21 },
+  { baseYvh: 0.80, scale: 0.80, rate: 0.24 },
+  { baseYvh: 0.98, scale: 0.75, rate: 0.23 },
+  { baseYvh: 1.16, scale: 0.68, rate: 0.21 },
 ];
 
 const MID_CLOUDS = [
-  { baseYvh: 0.75, scale: 1.25, rate: 0.36 },
-  { baseYvh: 1.05, scale: 1.40, rate: 0.40 },
-  { baseYvh: 1.38, scale: 1.30, rate: 0.37 },
-  { baseYvh: 1.65, scale: 1.45, rate: 0.42 },
-  { baseYvh: 1.80, scale: 1.20, rate: 0.35 },
+  { baseYvh: 0.70, scale: 1.25, rate: 0.36 },
+  { baseYvh: 0.86, scale: 1.40, rate: 0.40 },
+  { baseYvh: 1.02, scale: 1.30, rate: 0.37 },
+  { baseYvh: 1.18, scale: 1.45, rate: 0.42 },
+  { baseYvh: 1.30, scale: 1.20, rate: 0.35 },
 ];
 
 const NEAR_CLOUDS = [
-  { baseYvh: 0.88, scale: 1.90, rate: 0.55 },
-  { baseYvh: 1.18, scale: 2.10, rate: 0.60 },
-  { baseYvh: 1.50, scale: 1.85, rate: 0.57 },
-  { baseYvh: 1.80, scale: 2.20, rate: 0.63 },
+  { baseYvh: 0.78, scale: 1.90, rate: 0.55 },
+  { baseYvh: 0.96, scale: 2.10, rate: 0.60 },
+  { baseYvh: 1.13, scale: 1.85, rate: 0.57 },
+  { baseYvh: 1.30, scale: 2.20, rate: 0.63 },
 ];
 
 const ALL_CLOUD_DEFS = [...FAR_CLOUDS, ...MID_CLOUDS, ...NEAR_CLOUDS];
@@ -74,6 +106,7 @@ const CLOUD_DEFS = isMobile
 const cloudDirection = Math.random() < 0.5 ? 1 : -1;
 
 function driftSpeed(rate) { return rate * 0.35; }
+
 
 // ── Canvas setup ───────────────────────────────────────────────────
 
@@ -97,9 +130,8 @@ window.addEventListener('resize', () => {
   }
 }, { passive: true });
 
+
 // ── Cloud state ────────────────────────────────────────────────────
-// Each cloud picks a random image index — resolved at draw time so
-// clouds that loaded before others still get assigned images.
 
 const clouds = [];
 
@@ -109,39 +141,36 @@ if (cloudCanvas) {
     const zoneW  = cloudVW / total;
     const startX = i * zoneW + Math.random() * zoneW;
     const imgIdx = Math.floor(Math.random() * CLOUD_IMAGES.length);
-
-    clouds.push({
-      def,
-      x:      startX,
-      speed:  driftSpeed(def.rate),
-      imgIdx,
-    });
+    clouds.push({ def, x: startX, speed: driftSpeed(def.rate), imgIdx });
   });
 
-  // Draw smallest clouds first so larger ones render on top.
+  // Smallest scale first so larger clouds render in front.
   clouds.sort((a, b) => a.def.scale - b.def.scale);
+
+  // Pre-render clouds whose images already landed in the browser cache.
+  clouds.forEach(cw => {
+    const img = loadedImages[cw.imgIdx];
+    if (img) preRenderCloud(cw, img);
+  });
 }
+
 
 // ── Draw function (called each frame by main.js) ───────────────────
 
 function drawClouds(scrollY) {
-  if (!ctx || imagesReady === 0 || clouds.length === 0) return;
+  if (!ctx || clouds.length === 0) return;
 
   const vw = cloudVW;
   const vh = cloudVH;
 
   ctx.clearRect(0, 0, vw, vh);
-  ctx.globalAlpha = 0.88;
 
   clouds.forEach((cw) => {
-    const img = loadedImages[cw.imgIdx];
-    if (!img) return;
+    if (!cw.offscreen) return; // still loading
 
     cw.x += cw.speed * cloudDirection;
 
-    const normalizedScale = (BASE_CLOUD_W / img.naturalWidth) * cw.def.scale;
-    const dw = img.naturalWidth  * normalizedScale;
-    const dh = img.naturalHeight * normalizedScale;
+    const dw = cw.dw, dh = cw.dh, pad = cw.offPad;
 
     if (cloudDirection > 0 && cw.x > vw) {
       cw.x = -dw;
@@ -152,15 +181,6 @@ function drawClouds(scrollY) {
     const y = cw.def.baseYvh * vh - scrollY * cw.def.rate;
     if (y + dh < 0 || y > vh) return;
 
-    // Atmospheric blur: far (small) clouds are softer, near ones are sharp.
-    // ctx.filter blur is applied at draw time — no extra GPU layers.
-    // far ~3px, mid ~2px, near ~1px — all get some softness
-    const blurPx = Math.max(0.5, 4.5 - cw.def.scale * 1.75).toFixed(1);
-    ctx.filter = `blur(${blurPx}px)`;
-
-    ctx.drawImage(img, cw.x, y, dw, dh);
+    ctx.drawImage(cw.offscreen, cw.x - pad, y - pad);
   });
-
-  ctx.filter    = 'none';
-  ctx.globalAlpha = 1;
 }
