@@ -430,6 +430,7 @@ body {
   position: relative;
   width: 100%;
   line-height: 0;
+  overflow: hidden;
   /* remove inline-block gap below SVG */
 }
 
@@ -445,6 +446,15 @@ body {
   width: 100%;
   height: auto;
   min-height: 160px;
+}
+
+/* PNG scene image — clips the bottom half so the page ends mid-image.
+   Tune the margin-bottom: more negative = less image shown. */
+.bottom-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: -20%;
 }
 
 .bottom-scene .site-footer {
