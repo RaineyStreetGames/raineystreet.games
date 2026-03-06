@@ -165,7 +165,7 @@ body {
 
 /* Open dropdown on hover (desktop) */
 @media (hover: hover) {
-  .has-dropdown:hover > .dropdown {
+  .has-dropdown:hover>.dropdown {
     opacity: 1;
     transform: none;
     pointer-events: auto;
