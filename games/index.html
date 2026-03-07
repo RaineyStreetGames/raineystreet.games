@@ -34,16 +34,35 @@
 
   <section class="section">
     <div class="section-inner">
-      <h2 data-animate="fade-up">Kithwind Series</h2>
-      <div class="game-cards">
-        <div class="game-card" data-animate="slide-left">
-          <h3><a href="games/kithwind/wilds">Wilds</a></h3>
-          <p>Survive the untamed frontier.</p>
-        </div>
-        <div class="game-card" data-animate="slide-right" style="--delay: 0.1s">
-          <h3><a href="games/kithwind/legends">Legends</a></h3>
-          <p>Forge your legacy.</p>
-        </div>
+      <div class="game-capsules">
+        <a class="game-capsule" href="games/kithwind/legends" data-animate="fade-up">
+          <img class="game-capsule-img" src="games/kithwind/legends/screenshot.png" alt="Kithwind: Legends" />
+          <div class="game-capsule-label">Kithwind: Legends</div>
+        </a>
+        <a class="game-capsule" href="games/kithwind/wilds" data-animate="fade-up" style="--delay: 0.05s">
+          <img class="game-capsule-img" src="games/kithwind/wilds/screenshot.png" alt="Kithwind: Wilds" />
+          <div class="game-capsule-label">Kithwind: Wilds</div>
+        </a>
+        <a class="game-capsule" href="games/dungeons" data-animate="fade-up" style="--delay: 0.10s">
+          <img class="game-capsule-img" src="games/dungeons/screenshot.png" alt="Dungeon Buddies" />
+          <div class="game-capsule-label">Dungeon Buddies</div>
+        </a>
+        <a class="game-capsule" href="games/wubs" data-animate="fade-up" style="--delay: 0.15s">
+          <img class="game-capsule-img" src="games/wubs/screenshot.png" alt="Wubs" />
+          <div class="game-capsule-label">Wubs</div>
+        </a>
+        <a class="game-capsule" href="games/transportationday" data-animate="fade-up" style="--delay: 0.20s">
+          <img class="game-capsule-img" src="games/transportationday/screenshot.png" alt="Transportation Day" />
+          <div class="game-capsule-label">Transportation Day</div>
+        </a>
+        <a class="game-capsule" href="games/boxster" data-animate="fade-up" style="--delay: 0.25s">
+          <img class="game-capsule-img" src="games/boxster/screenshot.png" alt="Boxster" />
+          <div class="game-capsule-label">Boxster</div>
+        </a>
+        <a class="game-capsule" href="games/beneaththesurface" data-animate="fade-up" style="--delay: 0.30s">
+          <img class="game-capsule-img" src="games/beneaththesurface/screenshot.png" alt="Beneath the Surface" />
+          <div class="game-capsule-label">Beneath the Surface</div>
+        </a>
       </div>
     </div>
   </section>
@@ -52,6 +71,11 @@
 
   <script src="components/footer.js"></script>
   <script src="static/main.js"></script>
+  <script>
+    document.querySelectorAll('.game-capsule-img').forEach((img) => {
+      img.onerror = () => img.closest('.game-capsule').classList.add('no-screenshot');
+    });
+  </script>
 </body>
 
 </html>
