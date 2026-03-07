@@ -5,6 +5,7 @@
 const BASE = '/raineystreet.games';
 
 const NAV_ITEMS = [
+  { label: 'Home', href: '/', desktopOnly: true },
   {
     label: 'Games',
     href: '/games',
@@ -100,7 +101,7 @@ function buildNav() {
 
   NAV_ITEMS.forEach((item) => {
     const li = document.createElement('li');
-    li.className = 'nav-item';
+    li.className = item.desktopOnly ? 'nav-item nav-desktop-only' : 'nav-item';
 
     if (item.dropdown) {
       // Dropdown parent — clickable link that also has a hover dropdown
@@ -136,12 +137,13 @@ function buildNav() {
   // Social icon tabs
   const socialLinks = [
     { href: 'https://bsky.app/profile/raineystreetgames.bsky.social', icon: BASE + '/assets/icons/bluesky.svg', label: 'Bluesky' },
-    { href: 'https://www.youtube.com/@raineystreetgames3671', icon: BASE + '/assets/icons/youtube.svg', label: 'YouTube' },
+    { href: 'https://www.youtube.com/@raineystreetgames', icon: BASE + '/assets/icons/youtube.svg', label: 'YouTube' },
+    { href: 'https://raineystreetgames.itch.io/', icon: BASE + '/assets/icons/itchio.svg', label: 'itch.io' },
   ];
 
   socialLinks.forEach((s) => {
     const li = document.createElement('li');
-    li.className = 'nav-item';
+    li.className = 'nav-item nav-desktop-only';
     const a = document.createElement('a');
     a.className = 'nav-tab';
     a.href = s.href;

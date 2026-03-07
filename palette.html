@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Color Palette — Rainey Street Games</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, sans-serif;
+      background: #1a1a2e;
+      color: #fff;
+      padding: 3rem 2rem;
+    }
+    h1 { font-size: 1.4rem; margin-bottom: 0.4rem; letter-spacing: 0.05em; }
+    .subtitle { font-size: 0.85rem; color: rgba(255,255,255,0.45); margin-bottom: 3rem; }
+    h2 { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+         color: rgba(255,255,255,0.4); margin-bottom: 1rem; }
+    .section { margin-bottom: 3rem; }
+    .swatches { display: flex; flex-wrap: wrap; gap: 1.25rem; }
+    .swatch {
+      width: 180px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .swatch-color { height: 110px; }
+    .swatch-info {
+      background: rgba(255,255,255,0.06);
+      padding: 0.65rem 0.8rem;
+    }
+    .swatch-name { font-size: 0.88rem; font-weight: 600; margin-bottom: 0.15rem; }
+    .swatch-hex  { font-size: 0.78rem; font-family: monospace; color: rgba(255,255,255,0.5); }
+    .swatch-note { font-size: 0.72rem; color: rgba(255,255,255,0.35); margin-top: 0.2rem; }
+  </style>
+</head>
+<body>
+
+  <h1>Rainey Street Games — Color Palette</h1>
+  <p class="subtitle">Local reference only · not deployed · tell Claude which color goes on which page</p>
+
+  <div class="section">
+    <h2>Current — Home page</h2>
+    <div class="swatches">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#5bb8f5"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Sky Blue</div>
+          <div class="swatch-hex">#5bb8f5 · rgb(91,184,245)</div>
+          <div class="swatch-note">Hero top (scroll start)</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#3780c6"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Deep Blue</div>
+          <div class="swatch-hex">#3780c6 · rgb(55,128,198)</div>
+          <div class="swatch-note">Hero bottom + all inner pages (current)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Candidates — Same tone, different hue</h2>
+    <div class="swatches">
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#3aa3b5"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Ocean Teal</div>
+          <div class="swatch-hex">#3aa3b5 · rgb(58,163,181)</div>
+          <div class="swatch-note">Cool, calm, coastal</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#3fa882"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Sage</div>
+          <div class="swatch-hex">#3fa882 · rgb(63,168,130)</div>
+          <div class="swatch-note">Earthy, wilderness</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#6a63c0"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Iris</div>
+          <div class="swatch-hex">#6a63c0 · rgb(106,99,192)</div>
+          <div class="swatch-note">Mythic, arcane</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#a05aaa"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Thistle</div>
+          <div class="swatch-hex">#a05aaa · rgb(160,90,170)</div>
+          <div class="swatch-note">Soft purple, legendary</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#b85a7a"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Dusty Rose</div>
+          <div class="swatch-hex">#b85a7a · rgb(184,90,122)</div>
+          <div class="swatch-note">Warm, storied</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#c08840"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Amber</div>
+          <div class="swatch-hex">#c08840 · rgb(192,136,64)</div>
+          <div class="swatch-note">Warm gold, adventure</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#b06040"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Ember</div>
+          <div class="swatch-hex">#b06040 · rgb(176,96,64)</div>
+          <div class="swatch-note">Warm rust, rugged</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#4870b8"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Slate Blue</div>
+          <div class="swatch-hex">#4870b8 · rgb(72,112,184)</div>
+          <div class="swatch-note">Cooler, slightly grey-blue</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Pages to assign</h2>
+    <div style="font-size:0.9rem; line-height:2; color:rgba(255,255,255,0.6);">
+      <div><strong style="color:#fff">/about</strong> → ?</div>
+      <div><strong style="color:#fff">/games</strong> → ?</div>
+      <div><strong style="color:#fff">/games/kithwind</strong> → ?</div>
+      <div><strong style="color:#fff">/games/kithwind/wilds</strong> → ?</div>
+      <div><strong style="color:#fff">/games/kithwind/legends</strong> → ?</div>
+    </div>
+  </div>
+
+</body>
+</html>
