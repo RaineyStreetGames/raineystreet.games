@@ -654,12 +654,14 @@ body {
 
 /* ── Game iframe page ─────────────────────────────────── */
 
+body.game-page {
+  background-color: #3aa3b5;
+}
+
 .game-frame-wrap {
-  position: fixed;
-  top: 64px;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  display: block;
+  margin-top: 64px;
+  height: calc(100vh - 64px);
 }
 
 .game-frame-wrap iframe {
