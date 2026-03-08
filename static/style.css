@@ -231,6 +231,19 @@ body {
   .submenu-toggle {
     display: none;
   }
+
+  /* Desktop: open dropdown/submenu on mouse hover */
+  .has-dropdown:hover > .dropdown {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+
+  .has-submenu:hover > .submenu {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
 }
 
 /* Flyout submenu — opens to the left (nav sits on the right side) */

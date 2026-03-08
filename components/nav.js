@@ -211,11 +211,14 @@ document.querySelector('.nav-hamburger').addEventListener('click', (e) => {
   }
 });
 
+const isHoverDevice = window.matchMedia('(hover: hover)').matches;
+
 // Top-level dropdown toggles
 document.addEventListener('click', (e) => {
-  // Top-level: "Games" tab — first click opens, second click navigates
+  // Top-level: "Games" tab
   const dropTab = e.target.closest('.has-dropdown > .nav-tab');
   if (dropTab) {
+    if (isHoverDevice) return; // CSS hover handles it; click navigates
     const li = dropTab.closest('.has-dropdown');
     const isOpen = li.classList.contains('is-open');
     if (!isOpen) {
@@ -224,16 +227,16 @@ document.addEventListener('click', (e) => {
       closeAllSubmenus();
       li.classList.add('is-open');
     } else {
-      // Already open: navigate
       closeAllDropdowns();
       closeAllSubmenus();
     }
     return;
   }
 
-  // Submenu link (e.g. "Kithwind") — first click opens, second click navigates
+  // Submenu link (e.g. "Kithwind")
   const subLink = e.target.closest('.has-submenu > a');
   if (subLink) {
+    if (isHoverDevice) return; // CSS hover handles it; click navigates
     const subItem = subLink.closest('.has-submenu');
     const isOpen = subItem.classList.contains('is-open');
     if (!isOpen) {
@@ -241,8 +244,7 @@ document.addEventListener('click', (e) => {
       closeAllSubmenus();
       subItem.classList.add('is-open');
     }
-    // Already open: navigate normally
-    e.stopPropagation(); // don't close parent dropdown
+    e.stopPropagation();
     return;
   }
 
