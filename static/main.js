@@ -80,7 +80,7 @@ window.addEventListener('scroll', () => {
 // Handles cloud drift, scroll parallax, background color, and logo
 // fade — all in one rAF loop to batch DOM writes per frame.
 
-// Cloud canvas throttle: ~24fps cap to reduce backdrop-filter
+// Cloud canvas throttle: ~48fps cap to reduce backdrop-filter
 // recomposite pressure on the nav and glass boxes.
 const CLOUD_FRAME_MS = 1000 / 48;
 let lastCloudDraw = 0;
@@ -93,7 +93,7 @@ function animate(ts) {
     scrollDirty = false;
   }
 
-  // Canvas redraws capped at ~24fps — clouds move slowly enough that
+  // Canvas redraws capped at ~48fps — clouds move slowly enough that
   // the lower rate is invisible, but it halves the backdrop-filter cost.
   if (typeof drawClouds === 'function' && ts - lastCloudDraw >= CLOUD_FRAME_MS) {
     drawClouds(currentScrollY);

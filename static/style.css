@@ -368,23 +368,6 @@ body {
   filter: drop-shadow(0 4px 32px rgba(0, 0, 0, 0.18));
 }
 
-/* Fallback wordmark — shown when logo image is absent */
-
-.hero-wordmark {
-  font-family: 'Bebas Neue', system-ui, sans-serif;
-  font-size: clamp(3rem, 10vw, 7rem);
-  letter-spacing: 0.04em;
-  line-height: 1;
-  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
-}
-
-.hero-tagline {
-  margin-top: 1rem;
-  font-size: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: rgba(255, 255, 255, 0.65);
-}
 
 /* ── Content flow (glass panels) ──────────────────────── */
 /* Appears after the hero scroll zone ends.               */
@@ -772,28 +755,6 @@ body {
   /* restore body line-height inside absolute block */
 }
 
-/* Legacy alias — keep .ground-scene working on the home page */
-.ground-scene {
-  position: relative;
-  width: 100%;
-  line-height: 0;
-}
-
-.ground-svg {
-  display: block;
-  width: 100%;
-  height: auto;
-  min-height: 160px;
-}
-
-.ground-scene .site-footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: 0;
-  line-height: 1.75;
-}
 
 /* ── Inner page hero (about, kithwind, etc.) ──────────── */
 

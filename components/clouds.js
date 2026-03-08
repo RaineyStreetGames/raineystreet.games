@@ -69,7 +69,7 @@ CLOUD_IMAGES.forEach((src, i) => {
 // scale:   display size multiplier
 // rate:    parallax + drift speed (higher = closer/faster)
 
-const isMobile = window.innerWidth < 768;
+const isMobile = window.innerWidth < 700;
 
 // Clouds are grouped into far/mid/near layers, then sorted by scale
 // so larger clouds always render in front of smaller ones.
