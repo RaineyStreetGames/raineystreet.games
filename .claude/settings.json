@@ -12,7 +12,8 @@
       "Bash(sed -i '' -e 's|Web\\\\.data\\\\.br|Web.data|g' -e 's|Web\\\\.framework\\\\.js\\\\.br|Web.framework.js|g' -e 's|Web\\\\.wasm\\\\.br|Web.wasm|g' \"$BASE/$game/build/index.html\")",
       "Bash(echo \"Patched $game\")",
       "Bash(__NEW_LINE_1121fa54e08caea1__ for game in transportationday dungeons)",
-      "Bash(sed -i '' -e 's|Web\\\\.data\\\\.gz|Web.data|g' -e 's|Web\\\\.framework\\\\.js\\\\.gz|Web.framework.js|g' -e 's|Web\\\\.wasm\\\\.gz|Web.wasm|g' \"$BASE/$game/build/index.html\")"
+      "Bash(sed -i '' -e 's|Web\\\\.data\\\\.gz|Web.data|g' -e 's|Web\\\\.framework\\\\.js\\\\.gz|Web.framework.js|g' -e 's|Web\\\\.wasm\\\\.gz|Web.wasm|g' \"$BASE/$game/build/index.html\")",
+      "Read(//Users/jessemichael/code/**)"
     ]
   }
 }

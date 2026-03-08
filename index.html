@@ -56,10 +56,7 @@
   <div class="content-flow">
 
     <section class="glass-panel">
-      <div class="glass-box">
-        <h2>Welcome</h2>
-        <p>Content placeholder — more to come here.</p>
-      </div>
+      <div id="feed-container" class="feed-panel"></div>
     </section>
 
     <section class="glass-panel">
@@ -79,6 +76,8 @@
 
   <script src="components/clouds.js"></script>
   <script src="components/footer.js"></script>
+  <script src="components/feed.js"></script>
+  <script>loadFeed(document.getElementById('feed-container'));</script>
   <script src="static/main.js"></script>
 </body>
 
