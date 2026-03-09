@@ -160,4 +160,8 @@ They write directly to the DOM — no bundler, no imports.
 - Per-page background color: add an entry to `PAGE_COLORS` in `static/main.js`.
 - To add a nav item: edit `NAV_ITEMS` in `components/nav.js`.
 - To add a game to the showcase: add an entry to `SHOWCASE_ITEMS` in `components/showcase.js` and drop a `{slug}.mp4` in `assets/videos/`.
+- Optimize showcase videos with ffmpeg before committing (480px wide, no audio, H.264, faststart):
+  ```
+  ffmpeg -i input.mp4 -vf "scale=480:-2" -an -c:v libx264 -crf 20 -preset slow -movflags +faststart output.mp4
+  ```
 - To add a social link: edit `FOOTER_SOCIAL` in `components/footer.js` (and `socialLinks` in `components/nav.js` for the nav icons).
