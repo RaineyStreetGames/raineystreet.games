@@ -157,6 +157,8 @@ if (cloudCanvas) {
 
 // ── Draw function (called each frame by main.js) ───────────────────
 
+let cloudsFadedIn = false;
+
 function drawClouds(scrollY) {
   if (!ctx || clouds.length === 0) return;
 
@@ -165,8 +167,10 @@ function drawClouds(scrollY) {
 
   ctx.clearRect(0, 0, vw, vh);
 
+  let drewAny = false;
   clouds.forEach((cw) => {
     if (!cw.offscreen) return; // still loading
+    drewAny = true;
 
     cw.x += cw.speed * cloudDirection;
 
@@ -183,4 +187,9 @@ function drawClouds(scrollY) {
 
     ctx.drawImage(cw.offscreen, cw.x - pad, y - pad);
   });
+
+  if (drewAny && !cloudsFadedIn) {
+    cloudsFadedIn = true;
+    cloudCanvas.style.opacity = '1';
+  }
 }

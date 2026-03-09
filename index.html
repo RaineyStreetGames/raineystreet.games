@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="static/style.css" />
 </head>
 
-<body>
+<body class="home-page">
 
   <!-- Nav injected by components/nav.js -->
   <script src="components/nav.js"></script>
@@ -60,9 +60,8 @@
     </section>
 
     <section class="glass-panel">
-      <div class="glass-box">
-        <h2>What We Build</h2>
-        <p>Content placeholder — more to come here.</p>
+      <div class="showcase-wrap">
+        <div id="showcase-container"></div>
       </div>
     </section>
 
@@ -77,7 +76,9 @@
   <script src="components/clouds.js"></script>
   <script src="components/footer.js"></script>
   <script src="components/feed.js"></script>
+  <script src="components/showcase.js"></script>
   <script>loadFeed(document.getElementById('feed-container'));</script>
+  <script>buildShowcase(document.getElementById('showcase-container'));</script>
   <script src="static/main.js"></script>
 </body>
 

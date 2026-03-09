@@ -18,23 +18,58 @@
   <link rel="stylesheet" href="static/style.css" />
 </head>
 
-<body>
+<body class="about-page">
 
   <!-- Nav injected by components/nav.js -->
   <script src="components/nav.js"></script>
 
-  <section class="page-hero">
-    <div class="page-hero-inner">
-      <h1 class="page-title" data-animate="fade-up">About</h1>
-      <p class="page-sub" data-animate="fade-up" style="--delay: 0.1s">
-        The studio behind the games.
-      </p>
+  <section class="section" style="padding-top: 100px;">
+    <div class="section-inner">
+      <h2 data-animate="fade-up">About Me</h2>
+      <div class="about-me-layout">
+        <div class="about-me-text">
+          <p data-animate="fade-up" style="--delay: 0.05s">I'm Jesse Michael. I'm a software engineer in Arizona who
+            builds backend systems and cloud services for a living.</p>
+          <p data-animate="fade-up" style="--delay: 0.1s">I also make games.</p>
+          <p data-animate="fade-up" style="--delay: 0.15s">Most of what I build is small right now. Small projects,
+            small ideas, things I can explore and learn from. With a desire to do much more.</p>
+          <p data-animate="fade-up" style="--delay: 0.2s">Since I was a kid, I've always wanted to develop games. With a
+            head full of ideas of games that I would want to make. And now I have 3 kids and want to build games that
+            they could play too.</p>
+          <p data-animate="fade-up" style="--delay: 0.25s">And Rainey Street Games is me finally doing it.</p>
+        </div>
+        <div class="about-photo-wrap" data-animate="slide-right">
+          <img src="about/jesse_photo.jpeg" alt="Jesse Michael" class="about-me-photo" />
+          <img src="" alt="" class="about-me-photo-variant" aria-hidden="true" />
+        </div>
+      </div>
     </div>
   </section>
 
   <section class="section">
     <div class="section-inner">
-      <p data-animate="fade-up">Content coming soon.</p>
+      <h2 data-animate="fade-up">About the Studio</h2>
+      <p data-animate="fade-up" style="--delay: 0.05s">Rainey Street Games will focus on slow, laid-back, and
+        exploratory gameplay.</p>
+      <p data-animate="fade-up" style="--delay: 0.1s">Small experiences. Worlds you can wander through and spend time
+        in. Games built around curiosity, discovery, and the feeling of being somewhere for a while.</p>
+      <p data-animate="fade-up" style="--delay: 0.15s">We won't deliver games built around twitchy reflexes, fast-paced
+        action, or hyper-competitive gameplay.</p>
+      <p data-animate="fade-up" style="--delay: 0.2s">The goal is to build places you can transport yourself into.
+        Places that feel imaginative, cozy, and worth exploring at your own pace.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-inner">
+      <h2 data-animate="fade-up">Contact</h2>
+      <p data-animate="fade-up" style="--delay: 0.05s">If you found yourself here for any reason, I'd love to hear from
+        you.</p>
+      <p data-animate="fade-up" style="--delay: 0.1s">Game ideas, issues, requests, or just to say hi!</p>
+      <a class="contact-email" href="mailto:raineystreetgames@gmail.com" data-animate="fade-up" style="--delay: 0.15s">
+        <img src="assets/icons/email.svg" alt="Email" class="contact-email-icon" />
+        raineystreetgames@gmail.com
+      </a>
     </div>
   </section>
 
@@ -42,6 +77,64 @@
 
   <script src="components/footer.js"></script>
   <script src="static/main.js"></script>
+  <script>
+    (function () {
+      const VARIANTS = [
+        'about/jesse_pixel.png',
+        'about/jesse_poly.png',
+        'about/jesse_paint.png',
+        'about/jesse_cartoon.png',
+      ];
+
+      const wrap = document.querySelector('.about-photo-wrap');
+      const variant = document.querySelector('.about-me-photo-variant');
+      if (!wrap || !variant) return;
+
+      const isMobile = window.matchMedia('(max-width: 700px)').matches;
+
+      if (isMobile) {
+        // Mobile: true crossfade — fade the NEXT image in on top of the current one,
+        // then silently update the base layer so the background never shows through.
+        const ALL = ['about/jesse_photo.jpeg'].concat(VARIANTS);
+        const base = wrap.querySelector('.about-me-photo');
+        let mobileIdx = 0;
+        base.src = ALL[mobileIdx];
+
+        setInterval(() => {
+          const nextIdx = (mobileIdx + 1) % ALL.length;
+          variant.src = ALL[nextIdx];             // preload next image in variant layer
+          wrap.classList.add('is-hovered');        // fade variant IN over the base
+
+          setTimeout(() => {
+            // Variant is now fully visible — silently move new image to base layer
+            base.src = ALL[nextIdx];
+            variant.style.transition = 'none';    // instant hide, no fade-out flash
+            wrap.classList.remove('is-hovered');
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+              variant.style.transition = '';       // restore transition for next cycle
+            }));
+            mobileIdx = nextIdx;
+          }, 650); // slightly after the 0.55s fade-in
+        }, 5000);
+
+      } else {
+        // Desktop: hover shows the variant, fade-out advances to the next
+        let nextIdx = Math.floor(Math.random() * VARIANTS.length);
+        variant.src = VARIANTS[nextIdx];
+
+        wrap.addEventListener('mouseenter', () => wrap.classList.add('is-hovered'));
+        wrap.addEventListener('mouseleave', () => wrap.classList.remove('is-hovered'));
+
+        variant.addEventListener('transitionend', (e) => {
+          if (e.propertyName !== 'opacity') return;
+          if (!wrap.classList.contains('is-hovered')) {
+            nextIdx = (nextIdx + 1) % VARIANTS.length;
+            variant.src = VARIANTS[nextIdx];
+          }
+        });
+      }
+    })();
+  </script>
 </body>
 
 </html>

@@ -7,7 +7,7 @@ const DEEP = [55,  128, 198]; // #3780c6  — home hero bottom / games fallback
 
 // Per-page background colors. Path matching strips trailing slash + index.html.
 const PAGE_COLORS = {
-  '/about':                  [63,  168, 130], // Sage    #3fa882
+  '/about':                  [47,  126,  98], // Sage Dark  #2f7e62
   '/games/kithwind':         [72,  112, 184], // Slate Blue #4870b8
   '/games/kithwind/wilds':   [192, 136,  64], // Amber   #c08840
   '/games/kithwind/legends': [176,  96,  64], // Ember   #b06040
