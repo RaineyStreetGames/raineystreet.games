@@ -8,18 +8,25 @@ const NAV_ITEMS = [
   { label: 'Home', href: '/', desktopOnly: true },
   {
     label: 'Games',
-    href: '/games',
+    href: '/games/',
     dropdown: [
       {
         label: 'Kithwind',
-        href: '/games/kithwind',
+        href: '/games/kithwind/',
         submenu: [
-          { label: 'Wilds',   href: '/games/kithwind/wilds' },
-          { label: 'Legends', href: '/games/kithwind/legends' },
+          { label: 'Metro Pop', href: '/games/kithwind/metro-pop/' },
+          { label: 'Wilds', href: '/games/kithwind/wilds/' },
+          { label: 'Legends', href: '/games/kithwind/legends/' },
+          { label: 'Afterlight', href: '/games/kithwind/afterlight/' },
+          { label: 'Astral Charts', href: '/games/kithwind/astral-charts/' },
+          { label: 'Crossroads', href: '/games/kithwind/crossroads/' },
+          { label: 'Horizons', href: '/games/kithwind/horizons/' },
+          { label: 'Kinlings', href: '/games/kithwind/kinlings/' },
+          { label: 'Scholars', href: '/games/kithwind/scholars/' },
+          { label: 'Seasons', href: '/games/kithwind/seasons/' },
         ],
       },
-      // Add future games here (without a submenu array for standalone entries)
-      // { label: 'New Game Title', href: '/new-game' },
+      { label: 'King’s Road', href: '/games/kings-road/' },
     ],
   },
   { label: 'About', href: '/about' },
@@ -43,10 +50,12 @@ function buildDropdownItem(item) {
   li.appendChild(a);
 
   if (hasSubmenu) {
+    a.setAttribute('aria-expanded', 'false');
     // Arrow button for mobile / explicit toggle
     const arrow = document.createElement('button');
     arrow.className = 'submenu-toggle';
     arrow.setAttribute('aria-label', `${item.label} sub-menu`);
+    arrow.setAttribute('aria-expanded', 'false');
     arrow.textContent = '›';
     li.appendChild(arrow);
 
@@ -73,6 +82,7 @@ function buildDropdownItem(item) {
 function buildNav() {
   const nav = document.createElement('nav');
   nav.className = 'topbar';
+  nav.setAttribute('aria-label', 'Main');
 
   // Brand icon
   const brand = document.createElement('a');
@@ -182,15 +192,20 @@ function closeMenu() {
 
 function closeAllDropdowns() {
   document.querySelectorAll('.nav-item.is-open').forEach((el) => {
-    el.classList.remove('is-open');
-    const btn = el.querySelector('[aria-expanded]');
-    if (btn) btn.setAttribute('aria-expanded', 'false');
+    setGroupOpen(el, false);
   });
 }
 
 function closeAllSubmenus() {
   document.querySelectorAll('.has-submenu.is-open').forEach((el) => {
-    el.classList.remove('is-open');
+    setGroupOpen(el, false);
+  });
+}
+
+function setGroupOpen(group, open) {
+  group.classList.toggle('is-open', open);
+  group.querySelectorAll(':scope > [aria-expanded]').forEach((control) => {
+    control.setAttribute('aria-expanded', String(open));
   });
 }
 
@@ -211,21 +226,36 @@ document.querySelector('.nav-hamburger').addEventListener('click', (e) => {
   }
 });
 
-const isHoverDevice = window.matchMedia('(hover: hover)').matches;
+const desktopFlyout = window.matchMedia('(min-width: 701px) and (hover: hover)');
+
+document.querySelectorAll('.has-dropdown, .has-submenu').forEach((group) => {
+  group.addEventListener('mouseenter', () => {
+    if (desktopFlyout.matches) setGroupOpen(group, true);
+  });
+  group.addEventListener('mouseleave', () => {
+    if (desktopFlyout.matches && !group.querySelector(':focus-visible')) setGroupOpen(group, false);
+  });
+  group.addEventListener('focusin', (e) => {
+    if (desktopFlyout.matches && e.target.matches(':focus-visible')) setGroupOpen(group, true);
+  });
+  group.addEventListener('focusout', (e) => {
+    if (desktopFlyout.matches && !group.contains(e.relatedTarget)) setGroupOpen(group, false);
+  });
+});
 
 // Top-level dropdown toggles
 document.addEventListener('click', (e) => {
   // Top-level: "Games" tab
   const dropTab = e.target.closest('.has-dropdown > .nav-tab');
   if (dropTab) {
-    if (isHoverDevice) return; // CSS hover handles it; click navigates
+    if (desktopFlyout.matches) return;
     const li = dropTab.closest('.has-dropdown');
     const isOpen = li.classList.contains('is-open');
     if (!isOpen) {
       e.preventDefault();
       closeAllDropdowns();
       closeAllSubmenus();
-      li.classList.add('is-open');
+      setGroupOpen(li, true);
     } else {
       closeAllDropdowns();
       closeAllSubmenus();
@@ -236,13 +266,13 @@ document.addEventListener('click', (e) => {
   // Submenu link (e.g. "Kithwind")
   const subLink = e.target.closest('.has-submenu > a');
   if (subLink) {
-    if (isHoverDevice) return; // CSS hover handles it; click navigates
+    if (desktopFlyout.matches) return;
     const subItem = subLink.closest('.has-submenu');
     const isOpen = subItem.classList.contains('is-open');
     if (!isOpen) {
       e.preventDefault();
       closeAllSubmenus();
-      subItem.classList.add('is-open');
+      setGroupOpen(subItem, true);
     }
     e.stopPropagation();
     return;
@@ -254,7 +284,7 @@ document.addEventListener('click', (e) => {
     const subItem = arrowBtn.closest('.has-submenu');
     const isOpen = subItem.classList.contains('is-open');
     closeAllSubmenus();
-    if (!isOpen) subItem.classList.add('is-open');
+    if (!isOpen) setGroupOpen(subItem, true);
     e.stopPropagation();
     return;
   }
@@ -277,6 +307,11 @@ document.addEventListener('click', (e) => {
 // Escape key closes everything
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
+    if (document.querySelector('.topbar.is-menu-open')) {
+      document.querySelector('.nav-hamburger').focus();
+    } else {
+      e.target.closest('.has-dropdown')?.querySelector('.nav-tab').focus();
+    }
     closeMenu();
     closeAllDropdowns();
     closeAllSubmenus();

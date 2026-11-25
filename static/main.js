@@ -8,9 +8,11 @@ const DEEP = [55,  128, 198]; // #3780c6  — home hero bottom / games fallback
 // Per-page background colors. Path matching strips trailing slash + index.html.
 const PAGE_COLORS = {
   '/about':                  [47,  126,  98], // Sage Dark  #2f7e62
+  '/games':                  [50,  117, 181], // Catalog blue #3275b5
   '/games/kithwind':         [72,  112, 184], // Slate Blue #4870b8
   '/games/kithwind/wilds':   [192, 136,  64], // Amber   #c08840
   '/games/kithwind/legends': [176,  96,  64], // Ember   #b06040
+  '/games/kings-road':       [103,  73,  50], // Tavern wood
 };
 
 const isHomePage = !!document.querySelector('.hero-scroll');

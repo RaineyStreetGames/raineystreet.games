@@ -5,12 +5,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#30343e" />
-  <meta name="description" content="Kithwind — a world of myth, wilderness, and legend. A series by Rainey Street Games." />
+  <meta name="description" content="Kithwind is our series of social games. One account and a shared friends list let you move between worlds together." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://raineystreetgames.github.io/raineystreet.games/games/kithwind" />
+  <meta property="og:url" content="https://raineystreetgames.github.io/raineystreet.games/games/kithwind/" />
   <meta property="og:title" content="Kithwind — Rainey Street Games" />
-  <meta property="og:description" content="A world of myth, wilderness, and legend." />
-  <meta property="og:image" content="https://raineystreetgames.github.io/raineystreet.games/assets/logo.png" />
+  <meta property="og:description" content="Kithwind is our series of social games. One account and a shared friends list let you move between worlds together." />
+  <meta property="og:image" content="https://raineystreetgames.github.io/raineystreet.games/games/kithwind/wordmark.webp" />
   <meta name="twitter:card" content="summary_large_image" />
   <title>Kithwind — Rainey Street Games</title>
   <base href="/raineystreet.games/" />
@@ -25,35 +25,22 @@
   <link rel="stylesheet" href="static/style.css" />
 </head>
 
-<body>
-
-  <!-- Nav injected by components/nav.js -->
+<body class="game-detail-page">
   <script src="components/nav.js"></script>
 
-  <section class="page-hero">
-    <div class="page-hero-inner">
-      <h1 class="page-title" data-animate="fade-up">Kithwind</h1>
-      <p class="page-sub" data-animate="fade-up" style="--delay: 0.1s">
-        A world of myth, wilderness, and legend.
-      </p>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section-inner">
-      <h2 data-animate="fade-up">The Series</h2>
-      <div class="game-cards">
-        <div class="game-card" data-animate="slide-left">
-          <h3><a href="games/kithwind/wilds">Wilds</a></h3>
-          <p>Survive the untamed frontier.</p>
-        </div>
-        <div class="game-card" data-animate="slide-right" style="--delay: 0.1s">
-          <h3><a href="games/kithwind/legends">Legends</a></h3>
-          <p>Forge your legacy.</p>
-        </div>
+  <main class="game-detail">
+    <nav class="game-breadcrumbs" aria-label="Breadcrumb">
+      <a href="games/">Games</a>
+    </nav>
+    <div class="game-intro">
+      <div>
+        <h1 class="page-title">Kithwind</h1>
+        <p class="game-summary">Kithwind is our series of social games. One account and a shared friends list let you move between worlds together.</p>
+        <a class="game-primary-link" href="https://kithwind.pages.dev/games">Browse games on Kithwind</a>
       </div>
+      <img class="game-intro-art" src="games/kithwind/wordmark.webp" alt="" width="960" height="480" />
     </div>
-  </section>
+  </main>
 
   <footer class="site-footer"></footer>
 
