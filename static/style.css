@@ -913,8 +913,6 @@ body {
   color: inherit;
 }
 
-.collection-links,
-.collection-heading,
 .game-breadcrumbs,
 .game-actions {
   display: flex;
@@ -923,31 +921,10 @@ body {
   gap: 0.75rem 1.5rem;
 }
 
-.collection-links {
-  margin-top: 1.25rem;
-}
-
-.collection-links a,
-.collection-heading a,
 .game-breadcrumbs a,
 .game-text-link {
   color: inherit;
   text-underline-offset: 0.24em;
-}
-
-.game-collection {
-  padding-block: 3rem;
-  scroll-margin-top: 64px;
-}
-
-.collection-heading {
-  justify-content: space-between;
-  margin-bottom: 1.25rem;
-}
-
-.collection-heading h2 {
-  margin: 0;
-  font-size: clamp(1.8rem, 4vw, 2.5rem);
 }
 
 .game-detail-page {
@@ -1043,44 +1020,17 @@ body {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
-.kithwind-capsule {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-  padding: 0.5rem 1.25rem;
-  aspect-ratio: auto;
-  background: #284961;
-  color: #fff;
-}
-
-.kithwind-capsule img {
-  width: 5.5rem;
-  height: auto;
-}
-
-.kithwind-capsule strong,
-.kithwind-capsule small {
-  display: block;
-  line-height: 1.35;
-}
-
-.kithwind-capsule strong {
-  font: 1.65rem/1.2 'Bebas Neue', system-ui, sans-serif;
-  letter-spacing: 0.05em;
-}
-
-.kithwind-capsule small {
-  margin-top: 0.15rem;
-  font-size: 0.94rem;
-  color: #dae6ed;
-}
-
 .game-capsule-img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.35s ease, filter 0.35s ease;
+}
+
+.game-capsule-placeholder {
+  object-fit: contain;
+  padding-bottom: 2.5rem;
 }
 
 .game-capsule:hover .game-capsule-img {
