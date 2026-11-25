@@ -30,49 +30,103 @@
   <!-- Nav injected by components/nav.js -->
   <script src="components/nav.js"></script>
 
-  <section class="page-hero">
-    <div class="page-hero-inner">
-      <h1 class="page-title" data-animate="fade-up">Games</h1>
-      <p class="page-sub" data-animate="fade-up" style="--delay: 0.1s">
-        Everything we've built and everything we're building.
-      </p>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section-inner">
-      <div class="game-capsules">
-        <a class="game-capsule" href="games/kithwind/legends" data-animate="fade-up">
-          <img class="game-capsule-img" src="games/kithwind/legends/screenshot.png" alt="Kithwind: Legends" />
-          <div class="game-capsule-label">Kithwind: Legends</div>
-        </a>
-        <a class="game-capsule" href="games/kithwind/wilds" data-animate="fade-up" style="--delay: 0.05s">
-          <img class="game-capsule-img" src="games/kithwind/wilds/screenshot.png" alt="Kithwind: Wilds" />
-          <div class="game-capsule-label">Kithwind: Wilds</div>
-        </a>
-        <a class="game-capsule" href="games/dungeons" data-animate="fade-up" style="--delay: 0.10s">
-          <img class="game-capsule-img" src="games/dungeons/screenshot.png" alt="Dungeon Buddies" />
-          <div class="game-capsule-label">Dungeon Buddies</div>
-        </a>
-        <a class="game-capsule" href="games/wubs" data-animate="fade-up" style="--delay: 0.15s">
-          <img class="game-capsule-img" src="games/wubs/screenshot.png" alt="Wubs" />
-          <div class="game-capsule-label">Wubs</div>
-        </a>
-        <a class="game-capsule" href="games/transportationday" data-animate="fade-up" style="--delay: 0.20s">
-          <img class="game-capsule-img" src="games/transportationday/screenshot.png" alt="Transportation Day" />
-          <div class="game-capsule-label">Transportation Day</div>
-        </a>
-        <a class="game-capsule" href="games/boxster" data-animate="fade-up" style="--delay: 0.25s">
-          <img class="game-capsule-img" src="games/boxster/screenshot.png" alt="Boxster" />
-          <div class="game-capsule-label">Boxster</div>
-        </a>
-        <a class="game-capsule" href="games/beneaththesurface" data-animate="fade-up" style="--delay: 0.30s">
-          <img class="game-capsule-img" src="games/beneaththesurface/screenshot.png" alt="Beneath the Surface" />
-          <div class="game-capsule-label">Beneath the Surface</div>
-        </a>
+  <main class="game-catalog">
+    <header class="page-hero">
+      <div class="page-hero-inner">
+        <h1 class="page-title">Games</h1>
+        <p class="page-sub">Everything we've built and everything we're building.</p>
+        <nav class="collection-links" aria-label="Game collections">
+          <a href="games/#kithwind">Kithwind</a>
+          <a href="games/#standalone">Standalone games</a>
+        </nav>
       </div>
-    </div>
-  </section>
+    </header>
+
+    <section id="kithwind" class="section game-collection" aria-labelledby="kithwind-heading">
+      <div class="section-inner">
+        <div class="collection-heading">
+          <h2 id="kithwind-heading">Kithwind</h2>
+          <a href="games/kithwind/">About the series</a>
+        </div>
+        <div class="game-capsules">
+          <a class="game-capsule kithwind-capsule" href="games/kithwind/metro-pop/">
+            <img src="games/kithwind/metro-pop/book.webp" width="320" height="320" alt="" loading="lazy" />
+            <span><strong>Metro Pop</strong><small>City life</small></span>
+          </a>
+          <a class="game-capsule kithwind-capsule" href="games/kithwind/wilds/">
+            <img src="games/kithwind/wilds/book.webp" width="320" height="320" alt="" loading="lazy" />
+            <span><strong>Wilds</strong><small>Camping &amp; exploration</small></span>
+          </a>
+          <a class="game-capsule kithwind-capsule" href="games/kithwind/legends/">
+            <img src="games/kithwind/legends/book.webp" width="320" height="320" alt="" loading="lazy" />
+            <span><strong>Legends</strong><small>Fantasy adventure</small></span>
+          </a>
+          <a class="game-capsule kithwind-capsule" href="games/kithwind/afterlight/">
+            <img src="games/kithwind/afterlight/book.webp" width="320" height="320" alt="" loading="lazy" />
+            <span><strong>Afterlight</strong><small>Zombie survival</small></span>
+          </a>
+          <a class="game-capsule kithwind-capsule" href="games/kithwind/astral-charts/">
+            <img src="games/kithwind/astral-charts/book.webp" width="320" height="320" alt="" loading="lazy" />
+            <span><strong>Astral Charts</strong><small>Space exploration</small></span>
+          </a>
+          <a class="game-capsule kithwind-capsule" href="games/kithwind/crossroads/">
+            <img src="games/kithwind/crossroads/book.webp" width="320" height="320" alt="" loading="lazy" />
+            <span><strong>Crossroads</strong><small>Village life</small></span>
+          </a>
+          <a class="game-capsule kithwind-capsule" href="games/kithwind/horizons/">
+            <img src="games/kithwind/horizons/book.webp" width="320" height="320" alt="" loading="lazy" />
+            <span><strong>Horizons</strong><small>Island survival</small></span>
+          </a>
+          <a class="game-capsule kithwind-capsule" href="games/kithwind/kinlings/">
+            <img src="games/kithwind/kinlings/book.webp" width="320" height="320" alt="" loading="lazy" />
+            <span><strong>Kinlings</strong><small>Creature collecting</small></span>
+          </a>
+          <a class="game-capsule kithwind-capsule" href="games/kithwind/scholars/">
+            <img src="games/kithwind/scholars/book.webp" width="320" height="320" alt="" loading="lazy" />
+            <span><strong>Scholars</strong><small>Magic school</small></span>
+          </a>
+          <a class="game-capsule kithwind-capsule" href="games/kithwind/seasons/">
+            <img src="games/kithwind/seasons/book.webp" width="320" height="320" alt="" loading="lazy" />
+            <span><strong>Seasons</strong><small>Small-town farming</small></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="standalone" class="section game-collection" aria-labelledby="standalone-heading">
+      <div class="section-inner">
+        <div class="collection-heading">
+          <h2 id="standalone-heading">Standalone games</h2>
+        </div>
+        <div class="game-capsules">
+          <a class="game-capsule" href="games/kings-road/" data-animate="fade-up">
+            <img class="game-capsule-img" src="games/kings-road/screenshot.png" alt="" loading="lazy" />
+            <div class="game-capsule-label">King’s Road</div>
+          </a>
+          <a class="game-capsule" href="games/dungeons/" data-animate="fade-up" style="--delay: 0.05s">
+            <img class="game-capsule-img" src="games/dungeons/screenshot.png" alt="" loading="lazy" />
+            <div class="game-capsule-label">Dungeon Buddies</div>
+          </a>
+          <a class="game-capsule" href="games/wubs/" data-animate="fade-up">
+            <img class="game-capsule-img" src="games/wubs/screenshot.png" alt="" loading="lazy" />
+            <div class="game-capsule-label">Wubs</div>
+          </a>
+          <a class="game-capsule" href="games/transportationday/" data-animate="fade-up" style="--delay: 0.05s">
+            <img class="game-capsule-img" src="games/transportationday/screenshot.png" alt="" loading="lazy" />
+            <div class="game-capsule-label">Transportation Day</div>
+          </a>
+          <a class="game-capsule" href="games/boxster/" data-animate="fade-up">
+            <img class="game-capsule-img" src="games/boxster/screenshot.png" alt="" loading="lazy" />
+            <div class="game-capsule-label">Boxster</div>
+          </a>
+          <a class="game-capsule" href="games/beneaththesurface/" data-animate="fade-up" style="--delay: 0.05s">
+            <img class="game-capsule-img" src="games/beneaththesurface/screenshot.png" alt="" loading="lazy" />
+            <div class="game-capsule-label">Beneath the Surface</div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <footer class="site-footer"></footer>
 
