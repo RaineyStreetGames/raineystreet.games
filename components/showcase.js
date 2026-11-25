@@ -10,6 +10,7 @@
 const SHOWCASE_CYCLE_MS = 7000;
 
 const SHOWCASE_ITEMS = [
+  { slug: 'kings-road', title: 'King’s Road', link: 'https://jesse0michael.github.io/kings-road/' },
   { slug: 'transport', title: 'Transportation Day', link: 'games/transportationday/' },
   { slug: 'wubs',      title: 'Wubs',               link: 'games/wubs/' },
   { slug: 'boxster',   title: 'Boxster',             link: 'games/boxster/' },
